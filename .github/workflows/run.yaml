@@ -1,0 +1,29 @@
+name: Download and Commit File
+
+on:
+  workflow_dispatch:
+  # You can also trigger on other events like push:
+  # push:
+  #   branches:
+  #     - main
+
+jobs:
+  download-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Download File
+        run: |
+          sh scripts/download.sh
+          mv firehol_level1.netset data/firehol_level1.ipv4.netset
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/firehol_level1.ipv4.netset
+          git commit -m "Add downloaded file"
+          git push
