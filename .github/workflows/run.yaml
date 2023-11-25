@@ -17,13 +17,18 @@ jobs:
 
       - name: Download File
         run: |
+          echo "Downloading file..."
+          pwd
+          mkdir -p data
+          ls -l
           sh scripts/download.sh
+          ls -l
           mv firehol_level1.netset data/firehol_level1.ipv4.netset
 
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/firehol_level1.ipv4.netset
+          git add -f data/firehol_level1.ipv4.netset
           git commit -m "Add downloaded file"
           git push
