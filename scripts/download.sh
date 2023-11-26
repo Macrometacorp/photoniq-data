@@ -1,10 +1,10 @@
 #!/bin/bash
-
+BASE="$GITHUB_WORKSPACE"
 # Function to download a file if it has been updated
 download_file() {
     local url="$1"
-    local etag_file="$2"
-    local download_file="$3"
+    local etag_file="$BASE/data/$2"
+    local download_file="$BASE/data/$3"
     local headers_file="headers.txt"
 
     # Check if the ETag file exists and read the ETag
@@ -34,5 +34,5 @@ download_file() {
 
 download_file "https://raw.githubusercontent.com/BryanMorgan/isbot/main/src/bot_regex_patterns.txt" "bot_regex_patterns.etag" bot_regex_patterns.txt
 
-download_file "https://iplists.firehol.org/files/firehol_level1.netset" firehol_level1.etag firehol_level1.netset
+download_file "https://iplists.firehol.org/files/firehol_level1.netset" firehol_level1.etag ipv4.blacklist
 

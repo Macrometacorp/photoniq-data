@@ -1,11 +1,10 @@
 name: Download and Commit File
 
 on:
+  schedule:
+    - cron: "*/5 * * * *"
+  #    - cron: "0 0 * * *" # Runs at 00:00 UTC every day
   workflow_dispatch:
-  # You can also trigger on other events like push:
-  # push:
-  #   branches:
-  #     - main
 
 jobs:
   download-and-commit:
@@ -17,18 +16,31 @@ jobs:
 
       - name: Download File
         run: |
-          echo "Downloading file..."
+          mkdir -p "$GITHUB_WORKSPACE/data"
           pwd
-          mkdir -p data
-          ls -l
+          echo "repo=$GITHUB_REPOSITORY"
+          echo "work=$GITHUB_WORKSPACE"
+          echo "====="
+          ls -l $GITHUB_WORKSPACE
+          echo "====="
+          ls -l $GITHUB_WORKSPACE/data
+          echo "====="
           sh scripts/download.sh
-          ls -l
-          mv firehol_level1.netset data/firehol_level1.ipv4.netset
+          echo "===="
+          ls -l "$GITHUB_WORKSPACE/data"
 
       - name: Commit and Push
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -f data/firehol_level1.ipv4.netset
-          git commit -m "Add downloaded file"
-          git push
+          pwd
+          echo "======"
+          ls -l "$GITHUB_WORKSPACE/data"
+          echo "======"
+          git status --porcelain
+          git_status=$(git status --porcelain)
+          if [[ -n $git_status ]]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add -f data/*
+            git commit -m "Update downloaded file"
+            git push
+          fi
