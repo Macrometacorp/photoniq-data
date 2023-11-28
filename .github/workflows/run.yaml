@@ -14,26 +14,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download File
+        env:
+            DOWNLOAD_ITEMS: ${{ secrets.DOWNLOAD_ITEMS }}
         run: |
           mkdir -p "$GITHUB_WORKSPACE/data"
-          pwd
-          echo "repo=$GITHUB_REPOSITORY"
-          echo "work=$GITHUB_WORKSPACE"
-          echo "====="
-          ls -l $GITHUB_WORKSPACE
-          echo "====="
-          ls -l $GITHUB_WORKSPACE/data
-          echo "====="
-          sh scripts/download.sh
-          echo "===="
-          ls -l "$GITHUB_WORKSPACE/data"
+          ./scripts/download.sh 2>&1
 
       - name: Commit and Push
         run: |
-          pwd
-          echo "======"
-          ls -l "$GITHUB_WORKSPACE/data"
-          echo "======"
           git status --porcelain
           git_status=$(git status --porcelain)
           if [[ -n $git_status ]]; then
