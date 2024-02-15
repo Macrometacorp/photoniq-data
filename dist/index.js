@@ -26602,7 +26602,6 @@ const streamPipeline = promisify(pipeline);
 async function downloadFile(fileName, url) {
   const outputPath = `${BASE_PATH}/${fileName}`;
 
-  console.log(`Downloading: ${url}`);
   const response = await fetch(url);
   if (!response.ok)
     throw new Error(`Unexpected response ${response.statusText}`);
@@ -26661,7 +26660,6 @@ const start = async (versions, downloadItems) => {
       // not saving if undefined, hence null in case of bottom values
       versions[name] = status === true ? versionNow : versions[name] ?? null;
       console.log(name, status);
-      console.log(versions);
     });
 
     fs.writeFileSync(VERSION_PATH, JSON.stringify(versions));
@@ -26687,8 +26685,6 @@ try {
 
 try {
   const downloadItems = JSON.parse(process.env.DOWNLOAD_ITEMS);
-
-  console.log(downloadItems);
 
   start(existingVersions, downloadItems);
 } catch {
