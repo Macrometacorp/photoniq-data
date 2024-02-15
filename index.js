@@ -101,5 +101,5 @@ try {
 
   start(existingVersions, downloadItems);
 } catch {
-  console.error("Could not get 'downloadItems'");
+  core.setFailed("Could not get 'downloadItems'");
 }
