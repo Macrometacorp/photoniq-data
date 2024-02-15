@@ -8,7 +8,7 @@ on:
 jobs:
   download-and-commit:
     runs-on: ubuntu-latest
-    name: Johb to Download Items
+    name: Job to Download Items
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
