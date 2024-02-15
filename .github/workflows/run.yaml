@@ -8,17 +8,14 @@ on:
 jobs:
   download-and-commit:
     runs-on: ubuntu-latest
-
+    name: Johb to Download Items
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
-
-      - name: Download File
+        uses: actions/checkout@v4
+      - name: Download Files
+        uses: ./
         env:
-            DOWNLOAD_ITEMS: ${{ secrets.DOWNLOAD_ITEMS }}
-        run: |
-          mkdir -p "$GITHUB_WORKSPACE/data"
-          ./scripts/download.sh 2>&1
+          DOWNLOAD_ITEMS: ${{ secrets.DOWNLOAD_ITEMS }}
 
       - name: Commit and Push
         run: |

@@ -1,0 +1,5 @@
+name: "Download Items"
+description: "Download URLs"
+runs:
+  using: "node20"
+  main: "dist/index.js"

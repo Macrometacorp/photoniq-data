@@ -1,3 +1,7 @@
 *.etag
 *.txt
 *.netset
+*.csv
+*.gz
+
+/node_modules
