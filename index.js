@@ -66,6 +66,11 @@ const start = async (versions, downloadItems) => {
         value: { name, status },
       } = res;
 
+      // Check and log if status is false, indicating a failed download.
+      if (status === false) {
+        console.error(`Error downloading ${name}`);
+      }
+
       // not saving if undefined, hence null in case of bottom values
       versions[name] = status === true ? versionNow : versions[name] ?? null;
       console.log(name, status);
